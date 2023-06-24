@@ -1,72 +1,58 @@
-// write your code here
-// write your code here
-// I am feeling very lost, without a learn test I didn't really know where to start or go. So I kept starting and aborting. Would love a review on how to start something like this.
- 
- 
- 
- 
-const url = 'http://localhost:3000/ramens'
- 
-fetch(url)
- 
- 
-const ramenMenuContainer = document.getElementById('ramen-menu');
- 
- 
- 
- 
-// function addRamenImage(){
-//     const getDivId = document.getElementById('ramen-menu');
-//     let path = 'ramens.images';
-//     const images =
-// }
- 
- 
- 
-// addEventListener('DOMContentLoaded', () => {
-   
-//     const URL = 'http://localhost:3000/ramens'
-   
-//     function fetchRamenList() {
-//         fetch(URL)
-//         .then(res => res.json)
-//         .then(json => renderRamenImageToScreen(json))
-//     }
-//     fetchRamenList();
-// })
- 
-//     const renderRamenImageToScreen = ramens => {
-//         const ramenMenuContainer = document.getElementById('ramen-menu');
-//         ramens.forEach(ramen =>{
-//             const ramenMenu =
-//         })
-//     }
- 
-// function createRamenImage(image) {
-//     image = document.querySelector(ramens.image);
-//     appendChild
-//     console.log(image)
-// }
- 
- 
-// const ramenDetailImage= document.querySelector('.detail-image');
-// console.log('hi')
-// fetch(ramenList)
-// .then((res) => console.log(HI))
-// .then(console.log(HI))
- 
-// const ramenMenu = document.getElementById('ramen-menu')
- 
-// function renderRamenImg(ramens) {
- 
-// }
- 
-// const renderRamenToScreen = ramens => {
-//     const ramenDiv = document.getElementById('ramen-menu');
-//     ramens.forEach(ramen => {
-//         const ramenMenu = makeRamenMenu(ramen);
-//         ramenDiv.append(ramenMenu)
-       
-//     })
-   
-// }
+
+const API = ("http://localhost:3000/ramens")
+
+el('new-ramen').addEventListener('submit', createNewRamen)
+
+fetch(API)
+.then(res => res.json())
+.then(ramens => renderRamens(ramens))
+
+function renderRamens(ramens) {
+    ramens.forEach(renderRamen)
+}
+
+function renderRamen(ramen) {
+    const ramenMenuDiv = el('ramen-menu')
+    const ramenImage = document.createElement('img')
+
+    ramenImage.src = ramen.image
+    
+    ramenMenuDiv.append(ramenImage)
+
+    ramenImage.addEventListener('click', (e) => renderDetails(ramen))
+}
+
+function renderDetails(ramen) {
+    
+    console.log(ramen.image)
+    const ramenImage = el('detail-image')
+    const ramenName = el('ramen-name')
+    const ramenRestaurant = el('restaurant-name')
+    const ratingDisplay = el('rating-display')
+    const commentDisplay = el('comment-display')
+    
+    ramenImage.src = ramen.image
+    ramenImage.alt = ramen.name
+    ramenName.textContent = ramen.name
+    ramenRestaurant.textContent = ramen.restaurant
+    ratingDisplay.textContent = ramen.rating
+    commentDisplay.textContent = ramen.comment
+    
+}
+
+function createNewRamen(e){
+    e.preventDefault()
+    const newRamen = {
+    name: e.target.name.value,
+    rating: e.target.rating.value,
+    restaurant: e.target.restaurant.value,
+    image: e.target.image.value,
+    comment: e.target['new-comment'].value
+    }
+    renderRamen(newRamen)
+    e.target.reset()
+}
+
+function el(elementName) {
+    return document.getElementById(elementName)
+}
